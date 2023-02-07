@@ -1,4 +1,4 @@
-
+#transfering file to main 
 
 mydata = read.csv("druguse_training.csv")
 mydata$gender = factor(mydata$gender, levels = c(0,1), labels = c('male', 'female') )
