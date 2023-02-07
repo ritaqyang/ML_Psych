@@ -49,11 +49,11 @@ Exp_b_CI
 log.prob.y.tr = predict(log.fit, type = "response") # calculate individual probabilities
 
 # type = "response" tells R to calculate P(Y = 1|X) for each observation
-
 log.pred.y.tr = ifelse(log.prob.y.tr>.5,1,0) # calculate predicted values using .5 cutoff
 log.pred.y.tr = as.factor(log.pred.y.tr)
-confusionMatrix(data = log.pred.y.tr, reference = mydata$buyer, positive = "1") # obtain confusion matrix
-log.roc.tr = roc(mydata$buyer,log.prob.y.tr,auc=TRUE) # plot the ROC curve with AUC 
+
+confusionMatrix(data = log.pred.y.tr, reference = mydata$status24, positive = "1") # obtain confusion matrix
+log.roc.tr = roc(mydata$status24,log.prob.y.tr,auc=TRUE) # plot the ROC curve with AUC 
 
 plot(log.roc.tr,print.auc=TRUE, legacy.axes=TRUE,
      ylab = "True Positive Rate",xlab = "False Positive Rate",main = "ROC",
