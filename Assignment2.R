@@ -46,20 +46,29 @@ Exp_b_CI
 
 ## 2.2 Additional Analysis ----
 ### on training sample ----
-log.prob.y.tr = predict(log.fit, type = "response") # calculate individual probabilities
 
 # type = "response" tells R to calculate P(Y = 1|X) for each observation
-log.pred.y.tr = ifelse(log.prob.y.tr>.5,1,0) # calculate predicted values using .5 cutoff
+
+log.prob.y.tr = predict(log.fit, type = "response") # calculate individual probabilities
+
+
+# calculate predicted values using .5 cutoff
+# assign 1 if prob  P(Y = 1|X) > 0.5, assign 0 otherwise 
+log.pred.y.tr = ifelse(log.prob.y.tr>.5,1,0) 
+
+#as.factor - encode it to categrical
 log.pred.y.tr = as.factor(log.pred.y.tr)
 
-confusionMatrix(data = log.pred.y.tr, reference = mydata$status24, positive = "1") # obtain confusion matrix
-log.roc.tr = roc(mydata$status24,log.prob.y.tr,auc=TRUE) # plot the ROC curve with AUC 
+#data: prediction, reference: actual status 
+confusionMatrix(data = log.pred.y.tr, reference = mydata$status24, positive = "1") 
+
+# plot the ROC curve with AUC 
+log.roc.tr = roc(mydata$status24,log.prob.y.tr,auc=TRUE) 
+
+# legacy.axes = TRUE if the x-axis must be plotted as increasing FPR(1-specificity)
+# auc.polygon = TRUE if you want to color the area under the ROC curve. 
 
 plot(log.roc.tr,print.auc=TRUE, legacy.axes=TRUE,
      ylab = "True Positive Rate",xlab = "False Positive Rate",main = "ROC",
      auc.polygon=TRUE,grid=TRUE)
-# legacy.axes = TRUE if the x-axis must be plotted as increasing FPR(1-specificity)
-# auc.polygon = TRUE if you want to color the area under the ROC curve. 
-
-
 

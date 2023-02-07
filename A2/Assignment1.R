@@ -1,11 +1,14 @@
 #transfering file to main 
 
 mydata = read.csv("druguse_training.csv")
-mydata$gender = factor(mydata$gender, levels = c(0,1), labels = c('male', 'female') )
+
+mydata$gender = factor(mydata$gdender, levels = c(0,1), labels = c('male', 'female') )
 mydata$family = factor(mydata$family, levels = c(2,1), labels = c('others', 'step or foster families'))
 mydata$marital = factor(mydata$marital, levels = c(0,1), labels = c('single', 'married'))
+
 lm_fit_long = lm(cig1 ~ gender + age + ses + marital + family, mydata) 
 summary(lm_fit_long)
+
 lm_fit_long = lm(cig1 ~ gender + age + I(age^2) + ses + marital + family, mydata) 
 summary(lm_fit_long)
 
