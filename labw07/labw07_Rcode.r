@@ -12,7 +12,7 @@ install.packages('pls') # for PCR and PLS regression
 library(glmnet) 
 library(psych)
 library(pls)
-setwd('C:/Users/cheol/Dropbox/Mcgill/Lecture/Machine_Learning_Hwang/2023_Winter/W07_Shrinkage_and_Data_Reduction')
+#setwd('C:/Users/cheol/Dropbox/Mcgill/Lecture/Machine_Learning_Hwang/2023_Winter/W07_Shrinkage_and_Data_Reduction')
 
 mydata = read.csv('Hitters_training.csv')
 View(mydata)
@@ -59,6 +59,8 @@ mydata2[,1] = NULL
   ridge.lam=ridge.cv$lambda.min
   ridge.fit= glmnet(mydata.X, mydata$Salary,
                     alpha = 0, lambda = ridge.lam)
+  ridge.lam
+  plot(ridge.cv)
   
 ### 2-2-2. Lasso regression ----
   lambdas = 10^seq(from = 2,to = -3, length.out = 100)
@@ -127,3 +129,5 @@ mydata2[,1] = NULL
   cat("\n MSE_PCR:  ",pcr.MSE,
       "\n MSE_PLSR: ",plsr.MSE,
       "\n MSE_Basic: ", lm.MSE)  
+
+  
