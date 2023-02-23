@@ -5,9 +5,9 @@
 # Heungsun Hwang and Gyeongcheol Cho    #
 #===#===#===#===#===#===#===#===#===#===#
 
-install.packages('glmnet') # for Ridge/Lasso regression
-install.packages('psych') # for PCA
-install.packages('pls') # for PCR and PLS regression
+#install.packages('glmnet') # for Ridge/Lasso regression
+#install.packages('psych') # for PCA
+#install.packages('pls') # for PCR and PLS regression
 # 1. Load libraries and data ---- 
 library(glmnet) 
 library(psych)
