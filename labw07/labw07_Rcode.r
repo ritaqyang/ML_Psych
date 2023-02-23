@@ -15,7 +15,7 @@ library(pls)
 #setwd('C:/Users/cheol/Dropbox/Mcgill/Lecture/Machine_Learning_Hwang/2023_Winter/W07_Shrinkage_and_Data_Reduction')
 
 mydata = read.csv('Hitters_training.csv')
-View(mydata)
+
 mydata$League =as.factor(mydata$League) 
 mydata$Division = as.factor(mydata$Division)
 mydata$NewLeague =as.factor(mydata$NewLeague)
@@ -28,8 +28,8 @@ mydata_test$NewLeague =as.factor(mydata_test$NewLeague)
 mydata_test.X=data.matrix(mydata_test[,colnames(mydata_test)!="Salary"])
 
 mydata2 = read.csv('toothpaste attribute rating.csv')
-View(mydata2)
 mydata2[,1] = NULL
+
 
 # 2. Shrinkage methods ----
 ##2-1. Given lambda ----
@@ -113,7 +113,7 @@ mydata2[,1] = NULL
   summary(pcr.fit)
   validationplot(pcr.fit) 
   pcr.pred.y.tt = predict(pcr.fit, mydata_test, ncomp = 16)
-  #head(pcr.fit$scores)
+  head(pcr.fit$scores)
   
   ## 4-2. PLSR ----
   plsr.fit = plsr(Salary ~ ., data = mydata,
@@ -121,6 +121,7 @@ mydata2[,1] = NULL
   summary(plsr.fit)
   validationplot(plsr.fit) 
   plsr.pred.y.tt = predict(plsr.fit, mydata_test, ncomp = 11)
+  
   
   ## 4-3. Comparison ----
   pcr.MSE =mean((pcr.pred.y.tt - mydata_test$Salary)^2) 
