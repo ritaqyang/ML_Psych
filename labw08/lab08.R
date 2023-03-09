@@ -16,11 +16,11 @@ library(caret)
 library(pROC)
 library(randomForest)
 library(gbm)
-setwd('C:/Users/cheol/Dropbox/Mcgill/Lecture/Machine_Learning_Hwang/W06_Tree_Methods')
+#setwd('C:/Users/cheol/Dropbox/Mcgill/Lecture/Machine_Learning_Hwang/W06_Tree_Methods')
 
 # For regression
 mydata = read.csv('Hitters2_training.csv')
-View(mydata)
+head(mydata)
 mydata$League =as.factor(mydata$League) 
 mydata$Division = as.factor(mydata$Division)
 mydata$NewLeague =as.factor(mydata$NewLeague)
@@ -135,6 +135,8 @@ varImpPlot(bag.fit, type = 2)
 bag.pred.y.tt = predict(bag.fit,mydata2.tt)
 confusionMatrix(data = bag.pred.y.tt, reference = mydata2.tt$HeartDisease, positive = "Yes")
 bag.prob.y.tt = predict(bag.fit,mydata2.tt,type="prob")
+head(bag.pred.y.tt)
+head(bag.prob.y.tt[,2])
 bag.roc.tt = roc(mydata2.tt$HeartDisease,bag.prob.y.tt[,2],auc=TRUE) # plot the ROC curve with AUC 
 plot(bag.roc.tt,print.auc=TRUE,legacy.axes=TRUE,
      ylab = "True Positive Rate",xlab = "False Positive Rate",main = "ROC",
@@ -195,3 +197,4 @@ cat("\n AUC(tree)         : ",ctree.roc.tt$auc,
     "\n AUC(bagging)      : ",bag.roc.tt$auc,
     "\n AUC(random forest): ",RF.roc.tt$auc,
     "\n AUC(boosting)     : ",boost.roc.tt$auc)
+
