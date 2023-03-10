@@ -1,0 +1,190 @@
+
+R version 4.2.2 (2022-10-31) -- "Innocent and Trusting"
+Copyright (C) 2022 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin17.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[R.app GUI 1.79 (8160) x86_64-apple-darwin17.0]
+
+[History restored from /Users/ritayang/.Rapp.history]
+
+2023-01-19 08:23:47.335 R[6208:433652] TSM AdjustCapsLockLEDForKeyTransitionHandling - _ISSetPhysicalKeyboardCapsLockLED Inhibit
+> install.packages("psych")
+--- Please select a CRAN mirror for use in this session ---
+trying URL 'https://cloud.r-project.org/bin/macosx/contrib/4.2/psych_2.2.9.tgz'
+Content type 'application/x-gzip' length 3826607 bytes (3.6 MB)
+==================================================
+downloaded 3.6 MB
+
+
+The downloaded binary packages are in
+	/var/folders/1j/z93blcy92xz_bdvm7p2w2s4m0000gn/T//RtmpukBM46/downloaded_packages
+> getwd()
+[1] "/Users/ritayang"
+> setwd(~/W02)
+Error: unexpected '/' in "setwd(~/"
+> setwd(./W02)
+Error in setwd(./W02) : object '.' not found
+> setwd(c:/Users/ritayang/Desktop/W02)
+Error: unexpected '/' in "setwd(c:/"
+> setwd(C:\\Users\\ritayang)
+Error: unexpected '\\' in "setwd(C:\\"
+starting httpd help server ... done
+> 
+> setwd('~/Desktop/W02')
+> mydata = read.csv("wineheartattack.csv") 
+>   View(mydata)
+Error in check_for_XQuartz(file.path(R.home("modules"), "R_de.so")) : 
+  X11 library is missing: install XQuartz from www.xquartz.org
+>   summary(mydata)
+      wine        heartattack   
+ Min.   :0.700   Min.   : 71.0  
+ 1st Qu.:1.250   1st Qu.:149.0  
+ Median :2.400   Median :199.0  
+ Mean   :3.026   Mean   :191.1  
+ 3rd Qu.:3.400   3rd Qu.:223.5  
+ Max.   :9.100   Max.   :300.0  
+>   
+>   describe(mydata)
+Error in describe(mydata) : could not find function "describe"
+>   library(psych)
+>   describe(mydata)
+            vars  n   mean    sd median trimmed   mad  min   max range  skew kurtosis    se
+wine           1 19   3.03  2.51    2.4    2.81  1.78  0.7   9.1   8.4  1.13     0.00  0.58
+heartattack    2 19 191.05 68.40  199.0  191.71 47.44 71.0 300.0 229.0 -0.06    -1.06 15.69
+>   
+>   lm_fit = lm(heartattack ~ wine, mydata) 
+>   summary(lm_fit)
+
+Call:
+lm(formula = heartattack ~ wine, data = mydata)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-62.95 -25.91 -12.35  26.97  55.52 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  260.563     13.835  18.833 7.97e-13 ***
+wine         -22.969      3.557  -6.457 5.91e-06 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 37.88 on 17 degrees of freedom
+Multiple R-squared:  0.7103,	Adjusted R-squared:  0.6933 
+F-statistic: 41.69 on 1 and 17 DF,  p-value: 5.913e-06
+
+>   
+>   plot(mydata$wine, mydata$heartattack)
+>   abline(lm_fit, lwd = 3, col = "red")
+> 
+> mydata = read.csv("curran_training.csv") 
+>   View(mydata)
+Error in check_for_XQuartz(file.path(R.home("modules"), "R_de.so")) : 
+  X11 library is missing: install XQuartz from www.xquartz.org
+>   
+>   summary(mydata)
+       id             gender           cogstm          emotsup           anti1           anti2      
+ Min.   :  2.00   Min.   :0.0000   Min.   : 3.000   Min.   : 3.000   Min.   :0.000   Min.   :0.000  
+ 1st Qu.: 53.25   1st Qu.:0.0000   1st Qu.: 8.000   1st Qu.: 8.000   1st Qu.:0.000   1st Qu.:0.000  
+ Median :107.50   Median :1.0000   Median : 9.000   Median :10.000   Median :1.000   Median :1.000  
+ Mean   :109.78   Mean   :0.5215   Mean   : 9.097   Mean   : 9.226   Mean   :1.559   Mean   :1.833  
+ 3rd Qu.:165.50   3rd Qu.:1.0000   3rd Qu.:11.000   3rd Qu.:11.000   3rd Qu.:2.000   3rd Qu.:3.000  
+ Max.   :221.00   Max.   :1.0000   Max.   :14.000   Max.   :13.000   Max.   :7.000   Max.   :9.000  
+     anti3            anti4           read1           read2           read3           read4      
+ Min.   : 0.000   Min.   :0.000   Min.   :0.700   Min.   :1.600   Min.   :2.200   Min.   :2.500  
+ 1st Qu.: 0.000   1st Qu.:0.000   1st Qu.:1.900   1st Qu.:3.400   1st Qu.:4.200   1st Qu.:4.825  
+ Median : 2.000   Median :2.000   Median :2.300   Median :4.000   Median :5.000   Median :5.800  
+ Mean   : 1.935   Mean   :2.097   Mean   :2.522   Mean   :4.042   Mean   :5.013   Mean   :5.787  
+ 3rd Qu.: 3.000   3rd Qu.:3.000   3rd Qu.:3.100   3rd Qu.:4.800   3rd Qu.:5.800   3rd Qu.:6.700  
+ Max.   :10.000   Max.   :9.000   Max.   :5.600   Max.   :6.200   Max.   :8.400   Max.   :8.300  
+>   describe(mydata)
+        vars   n   mean    sd median trimmed   mad min   max range  skew kurtosis   se
+id         1 186 109.78 64.51  107.5  109.45 83.03 2.0 221.0 219.0  0.03    -1.23 4.73
+gender     2 186   0.52  0.50    1.0    0.53  0.00 0.0   1.0   1.0 -0.09    -2.00 0.04
+cogstm     3 186   9.10  2.48    9.0    9.21  2.97 3.0  14.0  11.0 -0.35    -0.48 0.18
+emotsup    4 186   9.23  2.27   10.0    9.40  1.48 3.0  13.0  10.0 -0.65     0.02 0.17
+anti1      5 186   1.56  1.61    1.0    1.32  1.48 0.0   7.0   7.0  1.20     1.24 0.12
+anti2      6 186   1.83  1.80    1.0    1.59  1.48 0.0   9.0   9.0  1.04     0.70 0.13
+anti3      7 186   1.94  1.82    2.0    1.71  1.48 0.0  10.0  10.0  1.04     1.33 0.13
+anti4      8 186   2.10  2.05    2.0    1.85  2.97 0.0   9.0   9.0  0.91     0.14 0.15
+read1      9 186   2.52  0.84    2.3    2.43  0.74 0.7   5.6   4.9  0.97     0.63 0.06
+read2     10 186   4.04  1.01    4.0    4.04  1.04 1.6   6.2   4.6 -0.04    -0.71 0.07
+read3     11 186   5.01  1.13    5.0    5.02  1.19 2.2   8.4   6.2  0.03    -0.05 0.08
+read4     12 186   5.79  1.27    5.8    5.81  1.33 2.5   8.3   5.8 -0.17    -0.61 0.09
+>   
+>   lm_fit_long = lm(anti1 ~ gender + cogstm + emotsup, mydata)
+>   summary(lm_fit_long)
+
+Call:
+lm(formula = anti1 ~ gender + cogstm + emotsup, data = mydata)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.5089 -1.1187 -0.3290  0.9261  5.4064 
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  2.619633   0.560243   4.676 5.69e-06 ***
+gender       0.646018   0.229772   2.812  0.00547 ** 
+cogstm       0.008342   0.049073   0.170  0.86521    
+emotsup     -0.159691   0.053881  -2.964  0.00345 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.557 on 182 degrees of freedom
+Multiple R-squared:  0.08062,	Adjusted R-squared:  0.06546 
+F-statistic:  5.32 on 3 and 182 DF,  p-value: 0.001549
+
+>   
+>   lm_fit_short = lm(anti1 ~ gender+emotsup, mydata)
+>   summary(lm_fit_short)
+
+Call:
+lm(formula = anti1 ~ gender + emotsup, data = mydata)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-2.5291 -1.1019 -0.3367  0.8981  5.4285 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  2.66742    0.48330   5.519 1.15e-07 ***
+gender       0.64441    0.22897   2.814  0.00542 ** 
+emotsup     -0.15656    0.05049  -3.101  0.00224 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 1.553 on 183 degrees of freedom
+Multiple R-squared:  0.08047,	Adjusted R-squared:  0.07042 
+F-statistic: 8.007 on 2 and 183 DF,  p-value: 0.0004637
+
+>   
+> mydata_test = read.csv("curran_test.csv") 
+>   pred_y_test_short = predict(lm_fit_short, mydata_test)
+>   MSE_short = mean((mydata_test$anti1 - pred_y_test_short)^2)
+>   RMSE_short = sqrt(MSE_short)
+> 
+>   pred_y_test_long = predict(lm_fit_long, mydata_test)
+>   MSE_long = mean((mydata_test$anti1 - pred_y_test_long)^2)
+>   RMSE_long = sqrt(MSE_long)
+>   
+>   cat("\n MSE_long : ", MSE_long,
++       "\n MSE_short: ", MSE_short)
+
+ MSE_long :  1.096179 
+ MSE_short:  1.099025
+> 
