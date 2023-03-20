@@ -12,8 +12,7 @@
   library(e1071) 
   library(caret)
   library(pROC)
-  setwd('C:/Users/cheol/Dropbox/Mcgill/Lecture/Machine_Learning_Hwang/2023_Winter/W09_SVM')
-  
+ 
   mydata = read.csv('Heart_training.csv')
   head(mydata)
   mydata$Sex = factor(mydata$Sex ,c(0,1), labels = c("female","male")) 
