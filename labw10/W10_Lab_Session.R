@@ -7,7 +7,7 @@
 
 # 0. Load libraries & data ---- 
 library(mclust)
-setwd('C:/Users/cheol/Dropbox/Mcgill/Lecture/Machine_Learning_Hwang/2023_Winter/W10_Cluster_Analysis')
+#setwd('C:/Users/cheol/Dropbox/Mcgill/Lecture/Machine_Learning_Hwang/2023_Winter/W10_Cluster_Analysis')
 
 mydata = read.csv('shoppingattitude.csv')
 head(mydata)
