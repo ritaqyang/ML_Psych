@@ -3,7 +3,7 @@
 #  Week 11: Deep learning               #
 #  Gyeongcheol Cho and Heungsun Hwang   #
 #===#===#===#===#===#===#===#===#===#===#
-setwd('C:/Users/cheol/Dropbox/Mcgill/Lecture/Machine_Learning_Hwang/2023_Winter/W11_Deep_Learning')
+
 
 ## Packages for deep learning 
 #install.packages('torch')
@@ -13,10 +13,17 @@ setwd('C:/Users/cheol/Dropbox/Mcgill/Lecture/Machine_Learning_Hwang/2023_Winter/
 #install.packages('gbm')  # for boosting
 library(torch)
 library(luz) 
-
 library(glmnet)
 library(randomForest)
 library(gbm)
+
+#use python install, integrate in R code 
+library(reticulate)
+virtualenv_create("venvtorch")
+use_virtualenv("venvtorch")
+py_install("torch")
+torch <- import("torch")
+
 # ########################################################################## #
 # 1. Regression Problem ----
 ## 1.1. Data preprocessing  ----
@@ -54,35 +61,56 @@ library(gbm)
   mydata.va.X=(mydata.va.X-matrix(1,N.va,1)%*%t(mean.tr.X))/(matrix(1,N.va,1)%*%sd.tr.X)
   mydata.tt.X=(mydata.tt.X-matrix(1,N.tt,1)%*%t(mean.tr.X))/(matrix(1,N.tt,1)%*%sd.tr.X)
   
-  mydata.tr.X.torch=torch_tensor(mydata.tr.X,torch_float())
-  mydata.tr.Y.torch=torch_tensor(mydata.tr.Y,torch_float())
-  mydata.va.X.torch=torch_tensor(mydata.va.X,torch_float())
-  mydata.va.Y.torch=torch_tensor(mydata.va.Y,torch_float())
+  
+  #use torch packgae via python 
+  #make a function for setting float 
+  f <- torch$FloatTensor
+  mydata.tr.X.copy = mydata.tr.X
+  mydata.tr.Y.copy = mydata.tr.Y
+  mydata.va.X.copy = mydata.va.X
+  mydata.va.Y.copy = mydata.va.Y
+  
+  #torch_float() all of them
+  mydata.tr.X.torch = f(mydata.tr.X.copy)
+  mydata.tr.Y.torch = f(mydata.tr.Y.copy)
+  mydata.va.X.torch = f(mydata.va.X.copy)
+  mydata.va.Y.torch = f(mydata.va.Y.copy)
+  head(mydata.tr.X.torch)
   
   data.tr = list(mydata.tr.X.torch, mydata.tr.Y.torch)
   data.va = list(mydata.va.X.torch, mydata.va.Y.torch)
 
 ## 1.2. Deep feedforward neural networks ----
 ### 1.2.1. Specifying a neural network ----
-  DL.R = nn_module(
+  
+  n <- torch$nn$Linear
+  d <- torch$nn$Dropout
+  r <- torch$nn$ReLU
+  
+  #nn_mse_loss
+  mse <- torch$nn$MSELoss
+  opt <- torch$optim$Optimizer
+  ff <-torch$FunctionSchema
+  
+  DL.R = torch$nn(
     initialize = function() {
-      self$hidden   = nn_linear(20, 64)
-      self$act.relu = nn_relu()
-      self$dropout  = nn_dropout(0.1)
-      self$output   = nn_linear(64, 1)
+      self$hidden   = n(20, 64)
+      self$act.relu = r()
+      self$dropout  = d(0.1)
+      self$output   = n(64, 1)
         #self$act.sigmoid = nn_sigmoid() for a binary  classification problem
         #self$act.softmax = nn_log_softmax() for a classification problem with multiple classes
     },
     forward = function(input) {
       input %>%
-        self$hidden() %>%
-        self$act.relu() %>%
-        self$dropout()  %>%
-        self$output()
+        self$hidden %>%
+        self$act.relu %>%
+        self$dropout  %>%
+        self$output
     }
   )%>%
   setup(
-    loss = nn_mse_loss(), 
+    loss = mse(), 
       # nn_bce_loss() for a binary  classification problem
       # nn_nll_loss() for a classification problems with multiple classes
     optimizer = optim_rmsprop, # advanced SGD
