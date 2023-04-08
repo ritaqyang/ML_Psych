@@ -20,10 +20,12 @@ library(gbm)
 ## 1.1. Data preprocessing  ----
 
 mydata = read.csv('Hitters_training.csv')
+head(mydata)
 mydata$League =as.factor(mydata$League) 
 mydata$Division = as.factor(mydata$Division)
 mydata$NewLeague =as.factor(mydata$NewLeague)
 
+head(mydata)
 mydata.tt = read.csv('Hitters_test.csv')
 mydata.tt$League =as.factor(mydata.tt$League) 
 mydata.tt$Division = as.factor(mydata.tt$Division)
@@ -64,10 +66,10 @@ data.va = list(mydata.va.X.torch, mydata.va.Y.torch)
 ### 1.2.1. Specifying a neural network ----
 DL.R = nn_module(
   initialize = function() {
-    self$hidden   = nn_linear(20, 64)
+    self$hidden   = nn_linear(20, 64) #20 = number of variables 
     self$act.relu = nn_relu()
-    self$dropout  = nn_dropout(0.1)
-    self$output   = nn_linear(64, 1)
+    self$dropout  = nn_dropout(0.1) #dropout rate given 
+    self$output   = nn_linear(64, 1) #64- number of units per hidden layer, 1 hidden layer 
     #self$act.sigmoid = nn_sigmoid() for a binary  classification problem
     #self$act.softmax = nn_log_softmax() for a classification problem with multiple classes
   },
@@ -169,6 +171,7 @@ N.columns= 28
 Data = read.csv('mnist_train.csv')
 Data.tt = read.csv('mnist_test.csv')
 View(Data)
+head(data)
 locY=1
 
 focal_id=1
@@ -211,7 +214,7 @@ Data.tt.DL = Data.DL.C(Data.tt,locY,N.bit)
 ## 2.2. Specifying a neural network ----
 DL.C = nn_module(
   initialize = function() {
-    self$linear1 = nn_linear(28*28, 256)
+    self$linear1 = nn_linear(28*28, 256) #pixels are 28 by 28, 256 hidden units in first layer 
     self$act.relu = nn_relu()
     self$drop4   = nn_dropout(p = 0.4)
     
