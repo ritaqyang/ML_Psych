@@ -32,16 +32,23 @@ mydata.tt$Division = as.factor(mydata.tt$Division)
 mydata.tt$NewLeague =as.factor(mydata.tt$NewLeague)
 
 N=nrow(mydata)
+head(N)
 N.va=round(N*.3)
 N.tr=N-N.va
 N.tt=nrow(mydata.tt)
 
-id.vali = sample(1:N,N.va) 
+test = sample(5:20,7)
+head(test)
+
+id.vali = sample(1:N,N.va)  
+#taking some from 1:N, size = N.va
+
 mydata.va = mydata[id.vali,]
 mydata.tr = mydata[-id.vali,]
 #mydata.tt = mydata.tt
-
+head(mydata.tr)
 mydata.tr.X=model.matrix(Salary~.-1,data=mydata.tr)
+head(mydata.tr.X)
 mydata.tr.Y=mydata.tr$Salary
 mydata.va.X=model.matrix(Salary~.-1,data=mydata.va)
 mydata.va.Y=mydata.va$Salary
@@ -69,7 +76,7 @@ DL.R = nn_module(
     self$hidden   = nn_linear(20, 64) #20 = number of variables 
     self$act.relu = nn_relu()
     self$dropout  = nn_dropout(0.1) #dropout rate given 
-    self$output   = nn_linear(64, 1) #64- number of units per hidden layer, 1 hidden layer 
+    self$output   = nn_linear(64, 1) #64- number of units per hidden layer
     #self$act.sigmoid = nn_sigmoid() for a binary  classification problem
     #self$act.softmax = nn_log_softmax() for a classification problem with multiple classes
   },
@@ -138,8 +145,8 @@ ridge.MSE = mean((ridge.pred.y.tt - mydata.tt.Y)^2)
 
 ## 1.3.3. Random Forest ----
 RF.fit = randomForest(Salary ~., mydata, importance = TRUE)
-#RF.fit  
-#varImpPlot(RF.fit, type = 1)
+RF.fit  
+varImpPlot(RF.fit, type = 1)
 RF.pred.y.tt = predict(RF.fit,mydata.tt)
 RF.MSE = mean((RF.pred.y.tt - mydata.tt.Y)^2)
 
